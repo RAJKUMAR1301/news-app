@@ -32,7 +32,7 @@ const CategoryNewsPage = ({ articles }: CategoryNewsPageProps) => {
       {/* <nav>
         <Link href="/">Home</Link>
       </nav> */}
-      <main className="">
+      <main className="mt-[-50]">
         <NewsGrid articles={articles} />
       </main>
     </>

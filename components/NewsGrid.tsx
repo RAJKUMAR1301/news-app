@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { getSearchQuery } from "@/context/SearchContext";
 import NewsComp from "./NewsComp";
 import Link from "next/link";
@@ -57,31 +58,51 @@ const NewsGrid = ({ articles }: any) => {
   }
 
   return (
-    <div className="mx-auto mt-20 md:mt-15 py-5">
-      <div className="flex justify-end mb-3">
-        <button
-          onClick={toggleLayout}
-          className="m-auto b-10 bg-red-200 p-4 mt-2"
-        >
-          Toggle Layout
-        </button>
-      </div>
+    <div className="flex flex-col mx-auto mt-20 py-5 gap-3 lg:gap-1">
+   <div className="flex mx-auto justify-center  md:mb-[-60px] ">
+  <button
+    onClick={toggleLayout}
+    className="flex bg-slate-400 text-slate-700 items-center justify-center h-10 p-2 mt-2 border border-slate-800 border-solid rounded font-bold py-6 px-4 lg:mt-10  sm:mb-20  "
+    style={{ fontSize: '20px', borderWidth: '3px' }}
+  >
+    <span style={{ marginRight: '5px' }}>Home</span>
+    <FaArrowRightArrowLeft className="text-black" />
+    <span style={{ marginLeft: '5px' }}>Blog</span>
+  </button>
+</div>
+
+
+
       {isGrid ? (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-          {filteredArticles?.map((article: any, index: number) => (
-            <div className="cols-span-1" key={index}>
-              <NewsComp article={article} />
-            </div>
-          ))}
-        </div>
+       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center mt-[-100] sm:mt-30">
+       {filteredArticles?.map((article: any, index: number) => (
+         <div className="cols-span-1" key={index}>
+           <NewsComp article={article} />
+         </div>
+       ))}
+     </div>
+     
       ) : (
-        <div className="w-[95vw] relative flex overflow-x-scroll  gap-8">
-          {filteredArticles?.map((article: any, index: number) => (
-            <div className="bg-white min-w-[400px] text-black" key={index}>
-              <NewsComp article={article} />
-            </div>
-          ))}
+        <div className="w-3/4  m-auto mt-[-40]">
+  <div className="relative">
+    <Slider ref={sliderRef} {...settings}>
+      {filteredArticles?.map((article: any, index: number) => (
+        <div className="bg-white mt-[-40] h-[400px] text-black" key={index}>
+          <NewsComp article={article} />
         </div>
+      ))}
+    </Slider>
+
+    <button className="absolute top-1/2 -left-8 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full" onClick={scrollPrev}>
+      &lt;
+    </button>
+    <button className="absolute top-1/2 -right-8 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full" onClick={scrollNext}>
+      &gt;
+    </button>
+  </div>
+</div>
+
+        
       )}
     </div>
   );

@@ -166,14 +166,15 @@ const Navbar = (props:any) => {
         }`}
       >
         <ul className={`h-screen/2 z-index:20 md:h-auto items-center justify-center md:flex ${navbar ? 'block' : 'hidden'} md:bg-slate-800`}>
-        <li className="pb-6 flex items-center justify-center text-xl text-white py-2  mr-4 ml-16 mx-auto  border-b-2 md:border-b-0 hover:bg-slate-800 border-slate-300 md:hover:text-purple-600 md:hover:bg-transparent">
-  <input
-    className="placeholder text-center text-black border-black border-2 rounded mr-2"
-    placeholder="Search..."
-    type='text'
-    value={searchQuery}
-    onChange={handleInputChange}
-  />
+        <li className="pb-6 flex items-center justify-center text-xl text-white py-2 mr-4 ml-16 mx-auto border-b-2 md:border-b-0 hover:bg-slate-800 border-slate-300 md:hover:text-purple-600 md:hover:bg-transparent">
+        <input
+  className="placeholder text-center text-black border border-solid border-black rounded-lg mr-2 px-2 py-1"
+  placeholder="Search..."
+  type="text"
+  value={searchQuery}
+  onChange={handleInputChange}
+/>
+
   <button className="icon text-black" onClick={handleSearch}>
     <FaSearch className="fasearch" />
   </button>
@@ -182,7 +183,7 @@ const Navbar = (props:any) => {
 
 
           {categories.map((category, index) => (
-            <li key={index} className="pb-6 text-xl text-gray-300 py-2 md:px-6 text-center border-b-2 md:border-b-0  hover:bg-slate-800 border-slate-300 md:hover:text-orange-800 md:hover:bg-transparent">
+            <li key={index} className="pb-6 text-l text-gray-300 py-2 md:px-6 text-center border-b-2 md:border-b-0  hover:bg-slate-800 border-slate-300 md:hover:text-orange-800 md:hover:bg-transparent">
               <Link href={`/categories/${category.categories}`} onClick={() => setNavbar(!navbar)}>
                 {category.categories.toUpperCase()}
               </Link>

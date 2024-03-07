@@ -23,7 +23,7 @@ type BreakingNewsPageProps = {
 
 export default function Home({ articles }: BreakingNewsPageProps) {
   return (
-    <main className="">
+    <main className="mt-[-50]">
      <NewsGrid articles={articles}/>
     </main>
   )

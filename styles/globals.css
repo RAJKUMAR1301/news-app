@@ -6,23 +6,6 @@
 @import url('https://unicons.iconscout.com/release/v4.0.8/css/line.css');
 
 /* Your other CSS styles go here */
-*pt-sans-regular {
-    font-family: "PT Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  @layer utilities {
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-   /* Hide scrollbar for IE, Edge and Firefox */
-    .no-scrollbar {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-  }
-}
-
 
   /* .search-icons-1{
     padding-left: 12px;;

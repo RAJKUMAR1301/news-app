@@ -7,7 +7,7 @@ import { FaTwitterSquare } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <div className=" raju lg:px-20 py-16 px-4 grid lg:grid-cols-3 gap-8 bg-slate-800">
+    <div className=" raju lg:px-20 py-16 px-4 grid lg:grid-cols-2 gap-8 bg-slate-800">
         <div className="">
         <div className=" gap-4 flex justify-between md:w-[75%] my-6">
     <a href="facebook.com">
