@@ -131,31 +131,44 @@ const Navbar = (props:any) => {
   }, []);
 
   return (
-    <div>
-     <nav className={`w-full fixed top-0 left-0 right-0 z-10 ${navbar ? 'bg-black  bg-opacity-50' : 'bg-slate-800'} md:bg-slate-800`}>
+    <div className="w-full h-auto sm:mb-">
+     <nav className={` fixed top-0 left-0 right-0 z-10 ${navbar ? 'bg-black  bg-opacity-50  ' : 'bg-slate-800'} md:bg-slate-800`}>
   <div className=" px-4 mx-auto lg:max-w-7xl md:items-center md:flex md: justify-evenly md:px-8">
     {/* left part */}
     <div>
       <div className="flex items-center justify-between py-3 md:py-5 md:block">
         {/* LOGO */}
         <Link href="/">
-          <h2 className={`text-2xl font-bold text-white hover:text-orange-800  ${navbar && 'border-b-2 border-white'}`}>NEWS APP</h2>
-        </Link>
+  <h2 className={`text-2xl font-bold text-white transition duration-300 hover:text-red-700 ${navbar && 'border-b-2 border-white'}`}>
+    NEWS APP
+  </h2>
+</Link>
+
         {/* HAMBURGER BUTTON FOR MOBILE */}
         <div className="md:hidden text-black">
-          <button
-            className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
-            onClick={() => setNavbar(!navbar)}
-          >
-            {navbar ? (
-              <ImCross width={50} height={50} />
-            ) : (
-              <RxDropdownMenu className="w-8 h-8 text-slate-300 focus:border-none active:border-none" />
+  <button
+    className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
+    onClick={() => setNavbar(!navbar)}
+    style={{ transition: "background-color 0.2s, color 0.2s" }} // Add transition here
+  >
+    {navbar ? (
+      <div className="flex justify-items-center gap-4 items-center" style={{ transition: "opacity 0.3s" }}>
+        <span className="text-xl font-semibold text-orange-800">
+          <span className="border-b border-black underline-offset-2">CLOSE</span>
+        </span>
+        <ImCross width={50} height={50} className="text-black" />
+      </div>
+    ) : (
+      <div className="flex justify-items-center gap-4 items-center" style={{ transition: "opacity 0.3s" }}>
+        <span className="text-xl font-semibold text-white">
+          <span className="border-b border-black underline-offset-2">Menu</span>
+        </span>
+        <RxDropdownMenu className="w-8 h-8 text-slate-300 focus:border-none active:border-none" />
+      </div>
+    )}
+  </button>
+</div>
 
-
-            )}
-          </button>
-        </div>
       </div>
     </div>
     {/* right part */}
@@ -165,33 +178,49 @@ const Navbar = (props:any) => {
           navbar ? 'p-12 md:p-0 block' : 'hidden' 
         }`}
       >
-        <ul className={`h-screen/2 z-index:20 md:h-auto items-center justify-center md:flex ${navbar ? 'block' : 'hidden'} md:bg-slate-800`}>
-        <li className="pb-6 flex items-center justify-center text-xl text-white py-2 mr-4 ml-16 mx-auto border-b-2 md:border-b-0 hover:bg-slate-800 border-slate-300 md:hover:text-purple-600 md:hover:bg-transparent">
-        <input
-  className="placeholder text-center text-black border border-solid border-black rounded-lg mr-2 px-2 py-1"
-  placeholder="Search..."
-  type="text"
-  value={searchQuery}
-  onChange={handleInputChange}
-/>
+        <ul className={`h-screen z-index:20 md:h-auto items-center justify-center md:flex ${navbar ? 'block' : 'hidden'} md:bg-slate-800`}>
+        <li className="relative pb-6 pt-[-10px] flex items-center justify-center text-xl text-white py-2 mr-4 ml-16 mx-auto  md:border-b-0 md:hover:bg-transparent">
+  <input
+    className="placeholder text-center text-black border border-solid border-black rounded-full mr-2 px-2 py-1"
+    placeholder="Search..."
+    type="text"
+    value={searchQuery}
+    onChange={handleInputChange}
+  />
 
-  <button className="icon text-black" onClick={handleSearch}>
-    <FaSearch className="fasearch" />
-  </button>
+<button className="icon text-black w-8 h-8 flex justify-center items-center bg-slate-400 rounded-full p-1" onClick={handleSearch}>
+  <FaSearch className="fasearch" />
+</button>
+
 </li>
+
+{navbar && (
+  <li className=" md:hidden pb-6 pt-[-10px] flex items-center justify-center text-2xl font-extrabold ">
+    Categories
+  </li>
+)}
+
+
 
 
 
           {categories.map((category, index) => (
-            <li key={index} className="pb-6 text-l text-gray-300 py-2 md:px-6 text-center border-b-2 md:border-b-0  hover:bg-slate-800 border-slate-300 md:hover:text-orange-800 md:hover:bg-transparent">
-              <Link href={`/categories/${category.categories}`} onClick={() => setNavbar(!navbar)}>
-                {category.categories.toUpperCase()}
-              </Link>
-            </li>
+      <li key={index} className="pb-4 text-l text-gray-100 py-2 md:px-6 text-center font-semibold">
+      <Link href={`/categories/${category.categories}`} onClick={() => setNavbar(!navbar)} className="hover:text-orange-500 md:hover:text-black transition duration-300">
+        <span className="hover:underline underline cursor-pointer">
+          {category.categories.toUpperCase()}
+        </span>
+      </Link>
+    </li>
+    
+        
+         
           ))}
         </ul>
       </div>
     </div>
+
+    {/* {right part} */}
   </div>
 </nav>
 

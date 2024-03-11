@@ -33,7 +33,17 @@ const NewsGrid = ({ articles }: any) => {
   const toggleLayout = () => {
     setIsGrid((prevState) => !prevState);
   };
+  const [visible,setVisible]=useState(6);
 
+  const showMoreItems=()=>{
+    setVisible((prevValue)=>prevValue+3);
+  }
+  const showLessItems = () => {
+    if (visible >= 6) {
+      setVisible((prevValue) => prevValue - 3);
+    }
+  };
+  
   const scrollPrev = () => {
     sliderRef.current?.slickPrev();
   };
@@ -44,61 +54,82 @@ const NewsGrid = ({ articles }: any) => {
 
   if (filteredArticles.length === 0) {
     return (
-      <div className="h-screen flex justify-center items-center">
-        <p onClick={() => push("/")}>
-          <p className="text-center text-3xl font-waterfall font-bold bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded border-black border-2">
-            <div className="flex flex-col">
-              <h1 className="text-xl">Page Not Found</h1>
-              <h3 className="text-sm">Back to Home page</h3>
-            </div>
-          </p>
+      <div className="h-screen flex justify-center items-center overflow-y-hidden bg-gray-600 text-gray-100 py-2 px-3 rounded-lg border border-gray-900">
+      <p onClick={() => push("/")}>
+        <p  className="bg-gray-800 font-semibold text-gray-100 py-2 px-3 rounded-lg border border-gray-900">
+          Page Not Found
         </p>
-      </div>
+        <p className="text-sm text-center font-serif">
+  <span className="font-bold">Back to</span>
+  <span className="underline cursor-pointer" onClick={() => push("/")}> Home page</span>
+</p>
+
+      </p>
+    </div>
+    
+    
     );
   }
 
   return (
-    <div className="flex flex-col mx-auto mt-20 py-5 gap-3 lg:gap-1">
-   <div className="flex mx-auto justify-center  md:mb-[-60px] ">
-  <button
-    onClick={toggleLayout}
-    className="flex bg-slate-400 text-slate-700 items-center justify-center h-10 p-2 mt-2 border border-slate-800 border-solid rounded font-bold py-6 px-4 lg:mt-10  sm:mb-20  "
-    style={{ fontSize: '20px', borderWidth: '3px' }}
-  >
-    <span style={{ marginRight: '5px' }}>Home</span>
-    <FaArrowRightArrowLeft className="text-black" />
-    <span style={{ marginLeft: '5px' }}>Blog</span>
-  </button>
-</div>
-
-
+    <div className="flex flex-col bg-slate-200 mx-auto mt-20 py-5 gap-3 lg:gap-1">
+   <div className="bg-slate-200">
+   <div className='flex  mx-auto shadow-sm bg-gray-800 p-1 gap-x-1 my-6 rounded-full max-w-max'>
+      <button 
+        className={`${isGrid ? "bg-gray-400 text-gray-900" : "bg-transparent text-gray-50"} py-2 px-5 rounded-full transition-all duration-200`}
+        onClick={() => setIsGrid(true)}>
+        Home 
+      </button>
+      <button 
+        className={`${!isGrid ? "bg-gray-400 text-gray-900" : "bg-transparent text-gray-50"} py-2 px-5 rounded-full transition-all duration-200`}
+        onClick={() => setIsGrid(false)}>
+        Blog
+      </button>
+    </div>
+   </div>
+ 
 
       {isGrid ? (
-       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center mt-[-100] sm:mt-30">
-       {filteredArticles?.map((article: any, index: number) => (
-         <div className="cols-span-1" key={index}>
-           <NewsComp article={article} />
-         </div>
-       ))}
-     </div>
-     
-      ) : (
-        <div className="w-3/4  m-auto mt-[-40]">
-  <div className="relative">
-    <Slider ref={sliderRef} {...settings}>
-      {filteredArticles?.map((article: any, index: number) => (
-        <div className="bg-white mt-[-40] h-[400px] text-black" key={index}>
-          <NewsComp article={article} />
-        </div>
-      ))}
-    </Slider>
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-content items-center mt-[-100] sm:mt-30">
+    {filteredArticles?.slice(0, visible).map((article: any, index: number) => (
+      // Slice to extract first 6 articles
+      <div className="cols-span-1" key={index}>
+        <NewsComp article={article} />
+      </div>
+    ))}
+    <div className="col-span-full flex justify-center mt-6 gap-2"> {/* Add flexbox properties to center the buttons */}
+    <button className="bg-gray-800 text-gray-100 py-2 px-3 rounded-lg border border-gray-900" onClick={showMoreItems}>
+  Show More
+</button>
+<button className="bg-gray-800 text-gray-100 py-2 px-3 rounded-lg border border-gray-700" onClick={showLessItems }>
+  Show Less
+</button>
 
-    <button className="absolute top-1/2 -left-8 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full" onClick={scrollPrev}>
+    </div>
+  </div>
+  
+ ) : (
+        <div className=" w-3/4 md:w-1/2  m-auto mt-[-40]">
+  <div className="relative ">
+       <div className="bg-slate-300"> 
+       <Slider className="bg-slate-500 py-8 rounded-xl" ref={sliderRef} {...settings}>
+  {filteredArticles?.map((article: any, index: number) => (
+    <div className="mt-[-40] h-[400px] z-20 text-black" key={index}>
+      <NewsComp isGrid={isGrid} article={article} />
+    </div>
+  ))}
+</Slider>
+
+
+
+    <button className="absolute top-1/2 -left-8 transform -translate-y-1/2 bg-gray-500 p-2 rounded-full" onClick={scrollPrev}>
       &lt;
     </button>
-    <button className="absolute top-1/2 -right-8 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full" onClick={scrollNext}>
+    <button className="absolute top-1/2 -right-8 transform -translate-y-1/2 bg-gray-500 p-2 rounded-full" onClick={scrollNext}>
       &gt;
     </button>
+         </div>
+   
   </div>
 </div>
 

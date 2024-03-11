@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   <NextNProgress />
   <SearchProvider>
     <Navbar />
-    {/* <Toggle /> */}
+    
     <Component {...pageProps} />
     <Footer />
   </SearchProvider>
