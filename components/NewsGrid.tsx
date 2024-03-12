@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Carousel from "react-bootstrap/Carousel";
-
+import NewsCompy from "./NewsCompy";
 const NewsGrid = ({ articles }: any) => {
   const { searchQuery } = getSearchQuery();
   const [filteredArticles, setFilteredArticles] = useState(articles);
@@ -72,8 +72,8 @@ const NewsGrid = ({ articles }: any) => {
   }
 
   return (
-    <div className="flex flex-col bg-slate-200 mx-auto mt-20 py-5 gap-3 lg:gap-1">
-   <div className="bg-slate-200">
+    <div className="flex flex-col  bg-slate-200 mx-auto mt-20 py-5 gap-3 lg:gap-1">
+       <div className="bg-slate-200 mt-4 md:mt-10">
    <div className='flex  mx-auto shadow-sm bg-gray-800 p-1 gap-x-1 my-6 rounded-full max-w-max'>
       <button 
         className={`${isGrid ? "bg-gray-400 text-gray-900" : "bg-transparent text-gray-50"} py-2 px-5 rounded-full transition-all duration-200`}
@@ -87,21 +87,44 @@ const NewsGrid = ({ articles }: any) => {
       </button>
     </div>
    </div>
- 
+
+
+   <div className="hidden sm:block md:flex bg-gray-300 mt-0 mb-4 mx-auto justify-content items-center gap-4 p-4 rounded-lg max-w-[960px] shadow-lg">
+  <div className="mt-2 font-serif text-brown-100">
+    For the best experience, use<Link href="/"> <span className="text-orange-800 font-2xl font-bold hover:text-orange-400">Newssy</span> </Link> app on your smartphone
+  </div>
+  <div className="flex justify-center mt-4">
+    <Link href="https://example.com/appstore">
+      <img src="/appstore.svg" className="w-24 h-auto mr-2" />
+    </Link>
+    <Link href="https://example.com/playstore">
+      <img src="/playstore.svg" className="w-24 h-auto ml-2" />
+    </Link>
+  </div>
+</div>
+
 
       {isGrid ? (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-content items-center mt-[-100] sm:mt-30">
+    <div className="grid grid-cols-1  gap-6 justify-content items-center mt-[-100]  sm:mt-30">
     {filteredArticles?.slice(0, visible).map((article: any, index: number) => (
       // Slice to extract first 6 articles
       <div className="cols-span-1" key={index}>
-        <NewsComp article={article} />
-      </div>
+  <div className="md:hidden  hover:scale-105 transition duration-400 ease-in"> {/* Render NewsComp on small screens (hidden on medium screens and up) */}
+    <NewsComp article={article} />
+  </div>
+  <div className="hidden md:block  hover:scale-105 transition duration-400 ease-in"> {/* Render NewsCompy on medium screens and up (hidden on small screens) */}
+    <NewsCompy article={article} />
+  </div>
+</div>
+
+
+    
     ))}
     <div className="col-span-full flex justify-center mt-6 gap-2"> {/* Add flexbox properties to center the buttons */}
-    <button className="bg-gray-800 text-gray-100 py-2 px-3 rounded-lg border border-gray-900" onClick={showMoreItems}>
+    <button className="bg-gray-800 hover:bg-slate-300 hover:text-gray-900 text-gray-100 py-2 px-3 rounded-lg border border-gray-900" onClick={showMoreItems}>
   Show More
 </button>
-<button className="bg-gray-800 text-gray-100 py-2 px-3 rounded-lg border border-gray-700" onClick={showLessItems }>
+<button className="bg-gray-800 hover:bg-slate-300 hover:text-slate-900 text-gray-100 py-2 px-3 rounded-lg border border-gray-700" onClick={showLessItems }>
   Show Less
 </button>
 
